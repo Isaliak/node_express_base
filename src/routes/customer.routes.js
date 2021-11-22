@@ -1,0 +1,15 @@
+const { Router } = require('express')
+const router = Router()
+
+const { controller } = require('../controllers/customer.controller')
+
+router.get('/', controller.get)
+router.get('/:id', controller.getById)
+router.post('/create', controller.create)
+router.put('/update/:id', controller.update)
+router.put('/delete/:id', controller.delete)
+
+module.exports = router
+
+
+
