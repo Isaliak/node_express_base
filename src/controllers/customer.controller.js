@@ -5,13 +5,13 @@ const Role = require('../models').roles
 const { responses, validationControllers, serverErrorResponse } = require('../helpers/controllers')
 
 Customer.hasOne(User, { foreignKey: 'customer_id' })
-User.belongsTo(Role, { foreignKey: 'rol_id' })
+User.belongsTo(Role, { foreignKey: 'role_id' })
 
 const controller = {}
 
 controller.get = async (req, res) => {
     try {
-        const customer = await responses.get(Customer)
+        const customer = await responses.get(Customer, { deleted: false }, [{ model: User, include: [Role] }])
         validationControllers(customer, res)
     } catch (error) {
         serverErrorResponse(error, res)
@@ -20,7 +20,7 @@ controller.get = async (req, res) => {
 controller.getById = async (req, res) => {
     const { id } = req.params
     try {
-        const customer = await responses.getOne(Customer, { deleted: false, id })
+        const customer = await responses.getOne(Customer, { deleted: false, id }, [{ model: User, include: [Role] }])
         validationControllers(customer, res)
     } catch (error) {
         serverErrorResponse(error, res)

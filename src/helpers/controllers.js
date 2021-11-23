@@ -2,19 +2,13 @@
 const responses = {}
 
 responses.get = async (model, conditions = { deleted: false }, includes = []) => {
-    // console.log(includes.length == 0)
-    try {
-        const resp = await model.findAll(
-            {
-                where: conditions,
-                include: includes
-            }
-        )
-        return resp
-    } catch (error) {
-        console.log(error)
-        return error
-    }
+    const resp = await model.findAll(
+        {
+            where: conditions,
+            include: includes
+        }
+    )
+    return resp
 }
 responses.getOne = async (model, conditions = { deleted: false }, includes = []) => {
     try {
@@ -31,31 +25,16 @@ responses.getOne = async (model, conditions = { deleted: false }, includes = [])
     }
 }
 responses.create = async (model, params = {}) => {
-    try {
-        const resp = await model.create(params)
-        return resp
-    } catch (error) {
-        console.log(error)
-        return error
-    }
+    const resp = await model.create(params)
+    return resp
 }
 responses.update = async (model, params = {}, conditions = { deleted: false }) => {
-    try {
-        const resp = await model.update(params, { where: conditions })
-        return resp
-    } catch (error) {
-        console.log(error)
-        return error
-    }
+    const resp = await model.update(params, { where: conditions })
+    return resp
 }
 responses.delete = async (model, conditions = { deleted: false }) => {
-    try {
-        const resp = await model.update({ deleted: true }, { where: conditions })
-        return resp
-    } catch (error) {
-        console.log(error)
-        return error
-    }
+    const resp = await model.update({ deleted: true }, { where: conditions })
+    return resp
 }
 const validationControllers = (resp, res, msg = 'No se encuentran datos') => {
     if (Array.isArray(resp)) {
